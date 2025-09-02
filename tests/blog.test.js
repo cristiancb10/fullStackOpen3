@@ -91,3 +91,19 @@ describe('favorite blog', () => {
         assert.strictEqual(result, null)
     })
 })
+
+describe('maximum number of blogs', () => {
+    test('returns null when list is empty', () => {
+        const result = listHelper.mostBlogs([])
+        assert.strictEqual(result, null)
+    })
+
+    test('Author with the most published blogs', () => {
+        const result = listHelper.mostBlogs(listWithOneBlog)
+        assert.deepStrictEqual(result, {
+            author: "Robert C. Martin",
+            blogs: 3
+        })
+        console.log(result)
+    })
+})
