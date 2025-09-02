@@ -83,7 +83,7 @@ describe('favorite blog', () => {
                 author: "Edsger W. Dijkstra",
                 likes: 12,
             })
-        console.log(result)
+        console.log('favorite blog:', result)
     })
 
     test('returns null when list is empty', () => {
@@ -104,6 +104,24 @@ describe('maximum number of blogs', () => {
             author: "Robert C. Martin",
             blogs: 3
         })
-        console.log(result)
+        console.log('Author with the most published blogs:')
+        console.log(JSON.stringify(result, null, 2))
+    })
+})
+
+describe('maximum number of likes', () => {
+    test('returns null when list is empty', () => {
+        const result = listHelper.mostLikes([])
+        assert.strictEqual(result, null)
+    })
+
+    test('author with blogs with the highest number of likes', () => {
+        const result = listHelper.mostLikes(listWithOneBlog)
+        assert.deepStrictEqual(result, {
+            author: "Edsger W. Dijkstra",
+            likes: 17
+        })
+        console.log('author with blogs with the highest number of likes:')
+        console.log(JSON.stringify(result, null, 2))
     })
 })
