@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test node --test",
     "build:ui": "rm -rf dist && cd ../apuntes2 && npm run build && cp -r dist ../apuntes4",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
-    "lint": "eslint .",
-    "test": "node --test"
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -17,15 +17,18 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
-    "express": "^5.1.0",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "lodash": "^4.17.21",
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.0"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.2.3",
+    "cross-env": "^10.0.0",
     "eslint": "^9.34.0",
     "globals": "^16.3.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   }
 }
