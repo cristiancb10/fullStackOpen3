@@ -35,6 +35,16 @@ test.only('a specific title can be viewed', async () => {
     assert.deepStrictEqual(resultNote.body, blogToView)
 })
 
+test('The unique identifier for blogs should be called id', async () => {
+    const allBlogs = await helper.blogsInDb()
+    const blog = allBlogs[0]
+
+    assert.ok(blog.id)
+
+    assert.strictEqual(blog._id, undefined)
+})
+
+
 after(async () => {
     await mongoose.connection.close()
 })
