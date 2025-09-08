@@ -70,6 +70,23 @@ test('the blog was created successfully', async () => {
     assert(titles.includes(newBlog.title))
 })
 
+
+test.only('In the absence of a value in the likes property, this will be 0', async () => {
+    const newBlog = {
+        title: "Cero likes",
+        author: "test for likes",
+        url: "https://fullstackopen.com/",
+    }
+
+    const response = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    assert.strictEqual(response.body.likes, 0)
+})
+
 after(async () => {
     await mongoose.connection.close()
 })
