@@ -22,7 +22,7 @@ test('all blogs all returned', async () => {
     assert.strictEqual(blogs.length, helper.initialBlogs.length)
 })
 
-test.only('a specific title can be viewed', async () => {
+test('a specific title can be viewed', async () => {
     const blogsAtStart = await helper.blogsInDb()
 
     const blogToView = blogsAtStart[0]
@@ -71,7 +71,7 @@ test('the blog was created successfully', async () => {
 })
 
 
-test.only('In the absence of a value in the likes property, this will be 0', async () => {
+test('In the absence of a value in the likes property, this will be 0', async () => {
     const newBlog = {
         title: "Cero likes",
         author: "test for likes",
@@ -85,6 +85,20 @@ test.only('In the absence of a value in the likes property, this will be 0', asy
         .expect('Content-Type', /application\/json/)
 
     assert.strictEqual(response.body.likes, 0)
+})
+
+test.only('the title and the url are necessary', async () => {
+    const newBlog = {
+        author: "test for missing fields"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
 })
 
 after(async () => {
