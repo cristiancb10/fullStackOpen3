@@ -44,6 +44,31 @@ test('The unique identifier for blogs should be called id', async () => {
     assert.strictEqual(blog._id, undefined)
 })
 
+test('the blog was created successfully', async () => {
+    const newBlog = {
+        title: "Blog created",
+        author: "Course Full Stack Open",
+        url: "https://fullstackopen.com/",
+        likes: 10
+    }
+
+    const response = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    assert.strictEqual(response.body.title, newBlog.title)
+    assert.strictEqual(response.body.author, newBlog.author)
+    assert.strictEqual(response.body.url, newBlog.url)
+    assert.strictEqual(response.body.likes, newBlog.likes)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+
+    const titles = blogsAtEnd.map(blog => blog.title)
+    assert(titles.includes(newBlog.title))
+})
 
 after(async () => {
     await mongoose.connection.close()
