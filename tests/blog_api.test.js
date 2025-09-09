@@ -125,9 +125,32 @@ describe('When there are initially some blogs saved', () => {
         })
     })
 
+    describe('updating a blog', () => {
+        test('succeeds with status code 200 if id is valid', async () => {
+            const blogsAtStart = await helper.blogsInDb()
+            const blogToUpdate = blogsAtStart[0]
+
+            const updatedBlog = {
+                title: "more likes",
+                author: "test for more likes",
+                url: "https://fullstackopen.com/",
+                likes: blogToUpdate.likes + 1
+            }
+
+            const response = await api
+                .put(`/api/blogs/${blogToUpdate.id}`)
+                .send(updatedBlog)
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            assert.strictEqual(response.body.likes, blogToUpdate.likes + 1)
+
+            const blogsAtEnd = await helper.blogsInDb()
+            const updatedBlogInDb = blogsAtEnd.find(b => b.id === blogToUpdate.id)
+            assert.strictEqual(updatedBlogInDb.likes, blogToUpdate.likes + 1)
+        })
+    })
 })
-
-
 
 after(async () => {
     await mongoose.connection.close()

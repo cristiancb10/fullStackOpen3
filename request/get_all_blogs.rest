@@ -1,1 +1,4 @@
 GET http://localhost:3001/api/blogs
+
+### ID especific 
+GET http://localhost:3001/api/blogs/68b52ea626a7565d1dda7f1e
